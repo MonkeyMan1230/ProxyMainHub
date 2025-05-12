@@ -1,28 +1,36 @@
+--[[
+   ___   ____  _____ ____  
+  / _ \ |  _ \| ____|  _ \ 
+ | | | || |_) |  _| | |_) |
+ | |_| ||  _ <| |___|  __/ 
+  \___/ |_| \_\_____|_|    
+           0rep
+]]
+
+
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
+local SoundService = game:GetService("SoundService")
+local StarterGui = game:GetService("StarterGui")
+local ContextActionService = game:GetService("ContextActionService")
 local player = Players.LocalPlayer
 
 repeat task.wait() until player and player.Character
 
 local creditKey = "0rep"
 local toggleKey = Enum.KeyCode.RightBracket
-local scriptActive = false
-local consoleSpam = false
-
-if creditKey == "0rep" then
-	scriptActive = true
-	consoleSpam = true
-end
+local scriptActive = creditKey == "0rep"
 
 local gui = Instance.new("ScreenGui")
 gui.Name = "ScriptGui"
 gui.ResetOnSpawn = false
 gui.IgnoreGuiInset = true
+gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
 gui.Parent = player:WaitForChild("PlayerGui")
 
 local label = Instance.new("TextLabel")
 label.Size = UDim2.new(0, 260, 0, 30)
-label.Position = UDim2.new(0, 10, 0.5, -15) -- Middle left
+label.Position = UDim2.new(0, 10, 0.5, -15)
 label.BackgroundTransparency = 0.4
 label.BackgroundColor3 = Color3.new(0, 0, 0)
 label.TextColor3 = Color3.fromRGB(0, 255, 0)
@@ -32,19 +40,13 @@ label.Text = "SCRIPT ACTIVE - BY 0rep"
 label.Parent = gui
 
 local function updateGUI()
-	if scriptActive then
-		label.Text = "SCRIPT ACTIVE - BY 0rep"
-		label.TextColor3 = Color3.fromRGB(0, 255, 0)
-	else
-		label.Text = "SCRIPT STOPPED - BY 0rep"
-		label.TextColor3 = Color3.fromRGB(255, 0, 0)
-	end
+	label.Text = scriptActive and "SCRIPT ACTIVE - BY 0rep" or "SCRIPT STOPPED - BY 0rep"
+	label.TextColor3 = scriptActive and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 0, 0)
 end
 
-UserInputService.InputBegan:Connect(function(input, gameProcessed)
+UserInputService.InputBegan:Connect(function(input)
 	if input.KeyCode == toggleKey then
 		scriptActive = not scriptActive
-		consoleSpam = scriptActive
 		updateGUI()
 	end
 end)
@@ -57,7 +59,7 @@ local function killAndVoidCharacter()
 		if hrp then
 			hrp.Anchored = false
 			hrp.CFrame = CFrame.new(0, -500, 0)
-			task.wait(0.2)
+			task.wait(0.25)
 		end
 		local hum = char:FindFirstChildWhichIsA("Humanoid")
 		if hum and hum.Health > 0 then
@@ -71,13 +73,13 @@ task.spawn(function()
 		if scriptActive then
 			killAndVoidCharacter()
 		end
-		task.wait(0.2)
+		task.wait(0.05)
 	end
 end)
 
 task.spawn(function()
 	while true do
-		if consoleSpam then
+		if scriptActive then
 			warn("YOU'VE BEEN TROLLED GET INFINITE KILLED")
 		end
 		task.wait(0.01)
@@ -88,5 +90,196 @@ player.CharacterAdded:Connect(function()
 	if scriptActive then
 		task.wait(0.5)
 		killAndVoidCharacter()
+	end
+end)
+
+-- ✅ Fake chat GUI (updated scrolling version)
+task.spawn(function()
+	local chatFrame = Instance.new("Frame")
+	chatFrame.Size = UDim2.new(0, 400, 0, 200)
+	chatFrame.Position = UDim2.new(0.5, -200, 0.5, -100)
+	chatFrame.BackgroundTransparency = 0.5
+	chatFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+	chatFrame.BorderSizePixel = 0
+	chatFrame.ClipsDescendants = true
+	chatFrame.ZIndex = 999
+	chatFrame.Parent = gui
+
+	local phrases = {
+		"[0rep]: you just got owned",
+		"[0rep]: imagine using this",
+		"[0rep]: skill issue",
+		"[0rep]: lol get voided",
+		"[0rep]: L script detected"
+	}
+
+	while true do
+		if scriptActive then
+			local msg = Instance.new("TextLabel")
+			msg.Size = UDim2.new(1, -10, 0, 40)
+			msg.Position = UDim2.new(0, 5, 1, 0)
+			msg.BackgroundTransparency = 1
+			msg.TextColor3 = Color3.new(1, 1, 1)
+			msg.Font = Enum.Font.SourceSansBold
+			msg.TextSize = 30
+			msg.TextXAlignment = Enum.TextXAlignment.Left
+			msg.Text = phrases[math.random(1, #phrases)]
+			msg.Parent = chatFrame
+
+			for _, child in ipairs(chatFrame:GetChildren()) do
+				if child:IsA("TextLabel") then
+					child:TweenPosition(
+						child.Position - UDim2.new(0, 0, 0, 40),
+						Enum.EasingDirection.Out,
+						Enum.EasingStyle.Linear,
+						0.25,
+						true
+					)
+				end
+			end
+
+			task.delay(3, function()
+				if msg and msg.Parent then
+					msg:Destroy()
+				end
+			end)
+		end
+		task.wait(1.2)
+	end
+end)
+
+task.spawn(function()
+	while true do
+		if scriptActive then
+			local char = player.Character
+			if char and char:FindFirstChild("HumanoidRootPart") then
+				pcall(function()
+					char.HumanoidRootPart.CFrame *= CFrame.Angles(0, math.rad(30), 0)
+				end)
+			end
+		end
+		task.wait(0.05)
+	end
+end)
+
+task.spawn(function()
+	while true do
+		if scriptActive then
+			local flash = Instance.new("Frame")
+			flash.Size = UDim2.new(1, 0, 1, 0)
+			flash.BackgroundColor3 = Color3.new(1, 1, 1)
+			flash.BackgroundTransparency = 0.4
+			flash.ZIndex = 999
+			flash.Parent = gui
+			task.wait(0.05)
+			flash:Destroy()
+		end
+		task.wait(0.1)
+	end
+end)
+
+task.spawn(function()
+	while true do
+		if scriptActive then
+			local s = Instance.new("Sound")
+			s.SoundId = "rbxassetid://138186576"
+			s.Volume = 10
+			s.Looped = false
+			s.Parent = SoundService
+			s:Play()
+			game.Debris:AddItem(s, 2)
+		end
+		task.wait(0.5)
+	end
+end)
+
+task.spawn(function()
+	while true do
+		if scriptActive then
+			ContextActionService:UnbindAction("ReverseMovement")
+			ContextActionService:BindAction("ReverseMovement", function(_, inputState, inputObj)
+				if inputState == Enum.UserInputState.Begin then
+					local char = player.Character
+					if char and char:FindFirstChild("Humanoid") then
+						local h = char.Humanoid
+						if inputObj.KeyCode == Enum.KeyCode.W then h:Move(Vector3.new(0, 0, 1), true) end
+						if inputObj.KeyCode == Enum.KeyCode.S then h:Move(Vector3.new(0, 0, -1), true) end
+					end
+				end
+			end, false, Enum.KeyCode.W, Enum.KeyCode.S)
+		else
+			ContextActionService:UnbindAction("ReverseMovement")
+		end
+		task.wait(5)
+	end
+end)
+
+task.spawn(function()
+	while true do
+		if scriptActive and math.random(1, 10) == 5 then
+			local msg = Instance.new("TextLabel")
+			msg.Size = UDim2.new(1, 0, 1, 0)
+			msg.Position = UDim2.new(0, 0, 0, 0)
+			msg.BackgroundColor3 = Color3.new(0, 0, 0)
+			msg.TextColor3 = Color3.new(1, 0, 0)
+			msg.Font = Enum.Font.SourceSansBold
+			msg.TextSize = 48
+			msg.Text = "Disconnected: Exploiting Detected"
+			msg.ZIndex = 1000
+			msg.Parent = gui
+			task.wait(1.5)
+			msg:Destroy()
+		end
+		task.wait(8)
+	end
+end)
+
+task.spawn(function()
+	while true do
+		if scriptActive then
+			local blocker = Instance.new("TextButton")
+			blocker.BackgroundTransparency = 1
+			blocker.Size = UDim2.new(math.random(), 0, math.random(), 0)
+			blocker.Position = UDim2.new(math.random(), 0, math.random(), 0)
+			blocker.ZIndex = 999
+			blocker.Text = ""
+			blocker.Active = true
+			blocker.AutoButtonColor = false
+			blocker.Parent = gui
+			task.wait(1)
+			blocker:Destroy()
+		end
+		task.wait(2)
+	end
+end)
+
+-- Scare Detection Popup every 10 seconds for 3 seconds
+task.spawn(function()
+	while true do
+		if scriptActive then
+			local scareMessage = Instance.new("TextLabel")
+			scareMessage.Size = UDim2.new(0, 400, 0, 100)  -- Adjusted size for better readability
+			scareMessage.Position = UDim2.new(0.5, -200, 0.4, -65)  -- Lifted GUI by 15
+			scareMessage.BackgroundTransparency = 0.5
+			scareMessage.BackgroundColor3 = Color3.new(1, 0, 0)
+			scareMessage.TextColor3 = Color3.new(1, 1, 1)
+			scareMessage.Font = Enum.Font.SourceSansBold
+			scareMessage.TextSize = 36
+			scareMessage.Text = "DETECTION ALERT! Exploit Detected!"
+			scareMessage.TextScaled = true
+			scareMessage.TextTransparency = 0
+			scareMessage.ZIndex = 1000
+			scareMessage.Parent = gui
+
+			-- Make it disappear after 3 seconds
+			task.delay(3, function()
+				if scareMessage and scareMessage.Parent then
+					scareMessage:TweenTransparency(1, Enum.EasingDirection.Out, Enum.EasingStyle.Linear, 0.5, true)
+					task.wait(0.5)
+					scareMessage:Destroy()
+				end
+			end)
+		end
+		task.wait(10)  -- Show scare message every 10 seconds
 	end
 end)
