@@ -1,0 +1,92 @@
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local player = Players.LocalPlayer
+
+repeat task.wait() until player and player.Character
+
+local creditKey = "0rep"
+local toggleKey = Enum.KeyCode.RightBracket
+local scriptActive = false
+local consoleSpam = false
+
+if creditKey == "0rep" then
+	scriptActive = true
+	consoleSpam = true
+end
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "ScriptGui"
+gui.ResetOnSpawn = false
+gui.IgnoreGuiInset = true
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local label = Instance.new("TextLabel")
+label.Size = UDim2.new(0, 260, 0, 30)
+label.Position = UDim2.new(0, 10, 0.5, -15) -- Middle left
+label.BackgroundTransparency = 0.4
+label.BackgroundColor3 = Color3.new(0, 0, 0)
+label.TextColor3 = Color3.fromRGB(0, 255, 0)
+label.Font = Enum.Font.SourceSansBold
+label.TextSize = 20
+label.Text = "SCRIPT ACTIVE - BY 0rep"
+label.Parent = gui
+
+local function updateGUI()
+	if scriptActive then
+		label.Text = "SCRIPT ACTIVE - BY 0rep"
+		label.TextColor3 = Color3.fromRGB(0, 255, 0)
+	else
+		label.Text = "SCRIPT STOPPED - BY 0rep"
+		label.TextColor3 = Color3.fromRGB(255, 0, 0)
+	end
+end
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+	if input.KeyCode == toggleKey then
+		scriptActive = not scriptActive
+		consoleSpam = scriptActive
+		updateGUI()
+	end
+end)
+
+local function killAndVoidCharacter()
+	local char = player.Character
+	if not char then return end
+	pcall(function()
+		local hrp = char:FindFirstChild("HumanoidRootPart")
+		if hrp then
+			hrp.Anchored = false
+			hrp.CFrame = CFrame.new(0, -500, 0)
+			task.wait(0.2)
+		end
+		local hum = char:FindFirstChildWhichIsA("Humanoid")
+		if hum and hum.Health > 0 then
+			hum:TakeDamage(999999)
+		end
+	end)
+end
+
+task.spawn(function()
+	while true do
+		if scriptActive then
+			killAndVoidCharacter()
+		end
+		task.wait(0.2)
+	end
+end)
+
+task.spawn(function()
+	while true do
+		if consoleSpam then
+			warn("YOU'VE BEEN TROLLED GET INFINITE KILLED")
+		end
+		task.wait(0.01)
+	end
+end)
+
+player.CharacterAdded:Connect(function()
+	if scriptActive then
+		task.wait(0.5)
+		killAndVoidCharacter()
+	end
+end)
