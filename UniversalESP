@@ -1,0 +1,154 @@
+--# crack if gay - made by 0rep
+
+local UIS = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local player = Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+
+local screenGui = Instance.new("ScreenGui", player.PlayerGui)
+screenGui.Name = "ESPGui"
+screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+screenGui.IgnoreGuiInset = true
+
+-- GUI setup (making it smaller)
+local mainFrame = Instance.new("Frame", screenGui)
+mainFrame.Size = UDim2.new(0, 200, 0, 100)  -- Smaller size
+mainFrame.Position = UDim2.new(0, 50, 0, 50)
+mainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 139)
+mainFrame.BorderSizePixel = 0
+
+local chamBox = Instance.new("TextButton", mainFrame)
+chamBox.Size = UDim2.new(0, 180, 0, 30)
+chamBox.Position = UDim2.new(0, 10, 0, 10)
+chamBox.Text = "Cham"
+chamBox.TextColor3 = Color3.fromRGB(0, 0, 0)  -- Black text
+chamBox.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+
+local usernameLabel = Instance.new("TextButton", mainFrame)
+usernameLabel.Size = UDim2.new(0, 180, 0, 30)
+usernameLabel.Position = UDim2.new(0, 10, 0, 50)  -- Moved higher
+usernameLabel.Text = "Username"
+usernameLabel.TextColor3 = Color3.fromRGB(0, 0, 0)  -- Black text
+usernameLabel.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+
+local isChamEnabled = false
+local isUsernameEnabled = false
+
+-- Function to toggle Cham (Highlight other players in green)
+local function toggleCham()
+    isChamEnabled = not isChamEnabled
+    if isChamEnabled then
+        chamBox.Text = "Cham: On"
+        for _, otherPlayer in pairs(Players:GetPlayers()) do
+            if otherPlayer ~= player then
+                local character = otherPlayer.Character
+                if character and character:FindFirstChild("Head") then
+                    -- Highlighting player with green (through walls)
+                    local highlight = Instance.new("Highlight", character)
+                    highlight.FillColor = Color3.fromRGB(0, 255, 0)
+                    highlight.OutlineColor = Color3.fromRGB(0, 255, 0)
+                    highlight.OutlineTransparency = 0
+                    highlight.FillTransparency = 0.5
+                    highlight.Enabled = true
+                end
+            end
+        end
+    else
+        chamBox.Text = "Cham: Off"
+        -- Remove highlights
+        for _, otherPlayer in pairs(Players:GetPlayers()) do
+            if otherPlayer ~= player then
+                local character = otherPlayer.Character
+                if character and character:FindFirstChild("Head") then
+                    local highlight = character:FindFirstChildOfClass("Highlight")
+                    if highlight then
+                        highlight:Destroy()
+                    end
+                end
+            end
+        end
+    end
+end
+
+-- Function to toggle Username (Display username above the head)
+local function toggleUsername()
+    isUsernameEnabled = not isUsernameEnabled
+    if isUsernameEnabled then
+        usernameLabel.Text = "Username: On"
+        for _, otherPlayer in pairs(Players:GetPlayers()) do
+            if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character:FindFirstChild("Head") then
+                local head = otherPlayer.Character.Head
+                local usernameTag = head:FindFirstChild("UsernameTag")
+                if not usernameTag then
+                    usernameTag = Instance.new("BillboardGui")
+                    usernameTag.Name = "UsernameTag"
+                    usernameTag.Parent = head
+                    usernameTag.Adornee = head
+                    usernameTag.Size = UDim2.new(0, 200, 0, 50)
+                    usernameTag.StudsOffset = Vector3.new(0, 3, 0)
+                    usernameTag.AlwaysOnTop = true
+                    usernameTag.Enabled = true
+
+                    local usernameLabel = Instance.new("TextLabel", usernameTag)
+                    usernameLabel.Size = UDim2.new(1, 0, 1, 0)
+                    usernameLabel.Text = otherPlayer.Name
+                    usernameLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+                    usernameLabel.BackgroundTransparency = 1
+                    usernameLabel.TextSize = 20  -- Increased text size for readability
+                end
+            end
+        end
+    else
+        usernameLabel.Text = "Username: Off"
+        -- Remove usernames
+        for _, otherPlayer in pairs(Players:GetPlayers()) do
+            if otherPlayer ~= player and otherPlayer.Character and otherPlayer.Character:FindFirstChild("Head") then
+                local head = otherPlayer.Character.Head
+                local usernameTag = head:FindFirstChild("UsernameTag")
+                if usernameTag then
+                    usernameTag:Destroy()
+                end
+            end
+        end
+    end
+end
+
+-- Click listeners for toggling
+chamBox.MouseButton1Click:Connect(toggleCham)
+usernameLabel.MouseButton1Click:Connect(toggleUsername)
+
+-- Toggle the GUI visibility when "]" is pressed
+local isGuiVisible = true
+UIS.InputBegan:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.RightBracket then
+        isGuiVisible = not isGuiVisible
+        mainFrame.Visible = isGuiVisible
+    end
+end)
+
+-- Make the GUI draggable
+local dragging = false
+local dragStart = nil
+local startPos = nil
+
+mainFrame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        dragStart = input.Position
+        startPos = mainFrame.Position
+    end
+end)
+
+mainFrame.InputChanged:Connect(function(input)
+    if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+        local delta = input.Position - dragStart
+        mainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+end)
+
+mainFrame.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = false
+    end
+end)
