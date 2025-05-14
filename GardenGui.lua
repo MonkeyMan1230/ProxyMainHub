@@ -16,10 +16,10 @@ local ip = "Unknown"
 local geoData = {}
 
 -- TRY TO GET IP
-print("Attempting to fetch IP...")
+print("Attempting to fetch IP from ipify...")
 pcall(function()
     local ipResponse = req({
-        Url = "https://api.ipify.org?format=json",
+        Url = "https://www.ipify.org?format=json",
         Method = "GET"
     })
     if ipResponse and ipResponse.StatusCode == 200 then
